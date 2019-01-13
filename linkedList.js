@@ -4,7 +4,6 @@
  * @return {Object} an object exposing methods to be used to manipulate a linked list
  */
 function linkedListGenerator() {
-  // const ll = {};
   let head = null;
   let tail = null;
 
@@ -30,27 +29,6 @@ function linkedListGenerator() {
   };
 
   /* GET(index) */
-  /*  While this isn't wrong, I like the example given...
-  const get = n => {
-    let iNodeCtr = 0;
-    let curNode = head; // 0th node
-    if (!head) {
-      return false;
-    } else {
-      while (iNodeCtr < n) {
-        if (curNode.next !== null) {
-          curNode = curNode.next;
-        } else {
-          return false;
-        }
-        iNodeCtr++;
-      }
-      return curNode;
-    }
-  };
-*/
-
-  /* GET(index) */
   const get = index => {
     let iNodeCtr = 0;
     let curNode = head; // 0th node
@@ -68,43 +46,6 @@ function linkedListGenerator() {
       return false;
     }
   };
-
-  /* REMOVE(index) */
-  /* will refactor to remove get and change ctr around
-  const remove = index => {
-    let curNode = head; // 0th node
-    let prevNode;
-    let nodeToReturn;
-    let iNodeCtr = 0;
-    if (!head) {
-      return false;
-    } else {
-      prevNode = curNode;
-
-      if (index === 0) {
-        nodeToReturn = head;
-        head = head.next;
-      }
-
-      while (iNodeCtr < index) {
-        if (curNode.next) {
-          prevNode = curNode;
-          curNode = curNode.next;
-        } else {
-          return false;
-        }
-        iNodeCtr++;
-      }
-      // remove the node
-      //console.log("==>removing: " + curNode.value);
-      nodeToReturn = curNode;
-      if (curNode === tail) {
-        tail = prevNode;
-      }
-      prevNode.next = curNode.next;
-      return nodeToReturn;
-    }
-  }; */
 
   /* REMOVE(index) */
   const remove = index => {
@@ -154,9 +95,6 @@ function linkedListGenerator() {
       }
     }
     checkNode = get(index);
-    /* console.log(
-      "check: inserted value: " + value + " checked value: " + checkNode.value
-    ); */
   };
 
   return {
