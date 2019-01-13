@@ -7,113 +7,130 @@ function linkedListGenerator() {
   // const ll = {};
   let head = null;
   let tail = null;
-  const getHead = () => {
-    return head;
-  };
-
-  const getTail = () => {
-    return tail;
-  };
+  const getHead = () => head;
+  const getTail = () => tail;
 
   const add = value => {
-    const o = {};
-    o["value"] = value;
-    o["next"] = null;
-    if (tail === null) {
+    const o = {
+      value: value,
+      next: null
+    };
+    if (!tail) {
       tail = o;
       head = o;
     } else {
-      // get reference to last item
-      const nextToLast = tail;
       // point last item to new item
-      nextToLast.next = o;
+      tail.next = o;
       // point tail to the new item
       tail = o;
     }
     return o;
   };
+
+  /* GET(n) */
+  /*  While this isn't wrong, I like the example given...
   const get = n => {
-    let thisNode = head; // 0th node
-    if (head === null) {
+    let iNodeCtr = 0;
+    let curNode = head; // 0th node
+    if (!head) {
       return false;
     } else {
-      let iNodeCtr = 0;
       while (iNodeCtr < n) {
-        if (thisNode.next !== null) {
-          thisNode = thisNode.next;
+        if (curNode.next !== null) {
+          curNode = curNode.next;
         } else {
           return false;
         }
         iNodeCtr++;
       }
-      return thisNode;
+      return curNode;
+    }
+  };
+*/
+  const get = index => {
+    let iNodeCtr = 0;
+    let curNode = head; // 0th node
+    if (!head) {
+      return false;
+    } else {
+      while (curNode) {
+        if (iNodeCtr === index) {
+          // found the spot, get the node
+          return curNode;
+        }
+        curNode = curNode.next;
+        iNodeCtr++;
+      }
+      return false;
     }
   };
 
-  const remove = n => {
-    console.log("-->Remove: n: " + n);
-    let thisNode = head; // 0th node
-    let previousNode;
+  const remove = index => {
+    let curNode = head; // 0th node
+    let prevNode;
     let nodeToReturn;
     let iNodeCtr = 0;
-    if (head === null) {
+    if (!head) {
       return false;
     } else {
-      previousNode = thisNode;
-      // thisNode = thisNode.next;
+      prevNode = curNode;
 
-      console.log(
-        "-->n: " + n + " head.value(" + iNodeCtr + "): " + head.value
-      );
-      if (n === 0) {
+      if (index === 0) {
         nodeToReturn = head;
         head = head.next;
       }
 
-      while (iNodeCtr < n) {
-        console.log("while iNodeCtr(" + iNodeCtr + ") <= n" + n);
-        if (thisNode.next !== null) {
-          console.log(
-            "loop n: " +
-              n +
-              " thisNode.value(" +
-              iNodeCtr +
-              "): " +
-              thisNode.value
-          );
-          previousNode = thisNode;
-          thisNode = thisNode.next;
+      while (iNodeCtr < index) {
+        if (curNode.next) {
+          prevNode = curNode;
+          curNode = curNode.next;
         } else {
           return false;
         }
         iNodeCtr++;
       }
       // remove the node
-      console.log("==>removing: " + thisNode.value);
-      nodeToReturn = thisNode;
-      if (thisNode === tail) {
-        tail = previousNode;
+      //console.log("==>removing: " + curNode.value);
+      nodeToReturn = curNode;
+      if (curNode === tail) {
+        tail = prevNode;
       }
-      previousNode.next = thisNode.next;
+      prevNode.next = curNode.next;
       return nodeToReturn;
     }
   };
-  const insert = (value, n) => {
-    let iNodeCtr = 0;
-    let tempNode;
-    const o = {};
-    o["value"] = value;
-    o["next"] = null;
-    if (n === 0) {
-      tempNode = head;
-      head = o;
-      if (tempNode === null) {
-        // ll is empty
+
+  /* INSERT */
+  const insert = (value, index) => {
+    if (index < 0) {
+      return false;
+    }
+    const o = {
+      value: value,
+      next: null
+    };
+    const prevNode = get(index - 1);
+    const curNode = get(index);
+    if (curNode) {
+      o.next = curNode;
+      if (index === 0) {
+        head = o;
+      } else {
+        prevNode.next = o;
+      }
+    } else {
+      // out of range or last position
+      if (prevNode == tail) {
+        tail.next = o;
         tail = o;
       } else {
-        o.next = tempNode;
+        return false;
       }
     }
+    checkNode = get(index);
+    /* console.log(
+      "check: inserted value: " + value + " checked value: " + checkNode.value
+    ); */
   };
 
   return {
