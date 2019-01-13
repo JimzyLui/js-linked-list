@@ -7,9 +7,11 @@ function linkedListGenerator() {
   // const ll = {};
   let head = null;
   let tail = null;
+
   const getHead = () => head;
   const getTail = () => tail;
 
+  /* ADD(value) */
   const add = value => {
     const o = {
       value: value,
@@ -27,7 +29,7 @@ function linkedListGenerator() {
     return o;
   };
 
-  /* GET(n) */
+  /* GET(index) */
   /*  While this isn't wrong, I like the example given...
   const get = n => {
     let iNodeCtr = 0;
@@ -47,6 +49,8 @@ function linkedListGenerator() {
     }
   };
 */
+
+  /* GET(index) */
   const get = index => {
     let iNodeCtr = 0;
     let curNode = head; // 0th node
@@ -65,6 +69,8 @@ function linkedListGenerator() {
     }
   };
 
+  /* REMOVE(index) */
+  /* will refactor to remove get and change ctr around
   const remove = index => {
     let curNode = head; // 0th node
     let prevNode;
@@ -97,6 +103,26 @@ function linkedListGenerator() {
       }
       prevNode.next = curNode.next;
       return nodeToReturn;
+    }
+  }; */
+
+  /* REMOVE(index) */
+  const remove = index => {
+    let curNode = get(index);
+    let prevNode = get(index - 1);
+
+    if (curNode) {
+      if (prevNode) {
+        prevNode.next = curNode.next;
+      } else {
+        head = curNode.next;
+      }
+      if (!curNode.next) {
+        tail = prevNode;
+      }
+      return curNode;
+    } else {
+      return false;
     }
   };
 
